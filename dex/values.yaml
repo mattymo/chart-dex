@@ -7,6 +7,7 @@ Dex:
   #Should be accessible from user browser. 
   NodePort: 30443
   Issuer: "https://kube-1.local.io:30443"
+  RedirectUri: "https://kube-1.local.io:30443/callback"
 
   #Must set your own CA which compatible with the Issuer URI.
   #Use base64 encoded value.
@@ -23,12 +24,12 @@ Dex:
       Name: "GitHub"
       ClientId: "NTQ3YjRhYjA3M2I0ZTM5OGQ0ZjA="
       ClientSecret: "MjYzN2Y3OTMyMTNlMmI4ZDZlM2RlM2Y0YWU2NzUzMTVhOWMzZWVkMQ=="
-    Oidc:
-      Name: "Google"
-      Id: "google"
-      Issuer: "https://accounts.google.com"
-      ClientId: "ODc2MDc2NjM5NDQ0LW8zdTIzZjY5ZGlsdXMxYTBkNzd0ZHQxb3FzMWZpaDViLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29t"
-      ClientSecret: "T0pMc0FLeUpsY2ZjaUtnbkhzaHVwZjQ4"
+#    Oidc:
+#      Name: "Google"
+#      Id: "google"
+#      Issuer: "https://accounts.google.com"
+#      ClientId: "ODc2MDc2NjM5NDQ0LW8zdTIzZjY5ZGlsdXMxYTBkNzd0ZHQxb3FzMWZpaDViLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29t"
+#      ClientSecret: "T0pMc0FLeUpsY2ZjaUtnbkhzaHVwZjQ4"
 #    Ldap:
 #      Name: "LDAP"
 #      Host: "openldap.kube-system.svc.cluster.io:389"

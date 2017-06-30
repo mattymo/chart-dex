@@ -134,7 +134,7 @@ data:
     staticClients:
     - id: example-app
       redirectURIs:
-        - "{{.Values.DexApp.RedirectUri}}"
+        - "{{.Values.Dex.RedirectUri}}"
       name: "Example App"
       secret: ZXhhbXBsZS1hcHAtc2VjcmV0
 
