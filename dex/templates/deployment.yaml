@@ -1,0 +1,80 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}
+  labels:
+    app: "{{ .Chart.Name }}-{{ .Chart.Version | replace '+' '_' }}"
+spec:
+  replicas: {{ .Values.replicaCount }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}
+    spec:
+      containers:
+      - name: {{ .Chart.Name }}
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        command: ["/usr/local/bin/dex", "serve", "/etc/dex/cfg/config.yaml"]
+        ports:
+{{- if .Values.service.tls }}
+        - name: dexPort
+          containerPort: 443
+{{- else }}
+        - name: dexPort
+          containerPort: 80
+{{- end }}
+        livenessProbe:
+          httpGet:
+            port: dexPort
+{{- if .Values.service.tls }}
+            scheme: HTTPS
+{{- end }}
+
+        volumeMounts:
+        - name: config
+          mountPath: /etc/dex/cfg
+{{- if .Values.service.tls }}
+        - name: tls
+          mountPath: /etc/dex/tls
+{{- end }}
+
+        env:
+{{- if .Values.connector.GitHub }}
+        - name: GITHUB_CLIENT_ID
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Release.Name }}.github
+              key: client-id
+        - name: GITHUB_CLIENT_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Release.Name }}.github
+              key: client-secret
+{{- end }}
+{{- if .Values.connector.Oidc }}
+        - name: OIDC_CLIENT_ID
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Release.Name }}.oidc
+              key: client-id
+        - name: OIDC_CLIENT_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Release.Name }}.oidc
+              key: client-secret
+{{- end }}
+        resources:
+{{ toYaml .Values.resources | indent 10 }}          
+      volumes:
+      - name: config
+        configMap:
+          name: {{ .Release.Name }}
+          items:
+          - key: config.yaml
+            path: config.yaml
+{{- if .Values.service.tls }}
+      - name: tls
+        secret:
+          secretName: {{ .Release.Name }}.tls
+{{- end }}
