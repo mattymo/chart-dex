@@ -34,10 +34,10 @@ resources:
 # If not using kube-lego set your own CA which compatible with the Issuer URI.
 # Use base64 encoded value.
 #
-tls:
-  ca: ""
-  cert: ""
-  key: ""
+# tls:
+#   ca: ""
+#   cert: ""
+#   key: ""
 
 # Must set your own credentials.
 # Use base64 encoded value.
