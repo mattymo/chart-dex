@@ -1,9 +1,10 @@
+{{- $chartVersionLabel := .Chart.Version | replace "+" "_" -}}
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   name: {{ .Release.Name }}
   labels:
-    app: "{{ .Chart.Name }}-{{ .Chart.Version | replace '+' '_' }}"
+    app: "{{ .Chart.Name }}-{{ $chartVersionLabel }}"
 spec:
   replicas: {{ .Values.replicaCount }}
   template:

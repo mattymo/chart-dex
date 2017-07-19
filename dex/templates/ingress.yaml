@@ -1,13 +1,14 @@
 {{- if .Values.ingress.enabled -}}
 {{- $serviceName := .Release.Name -}}
 {{- $servicePort := .Values.service.externalPort -}}
+{{- $chartVersionLabel := .Chart.Version | replace "+" "_" -}}
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   name: {{ .Release.Name }}
   labels:
     app: {{ .Release.Name }}
-    chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace '+' '_' }}"
+    chart: "{{ .Chart.Name }}-{{ $chartVersionLabel }}"
     release: "{{ .Release.Name }}"
     heritage: "{{ .Release.Service }}"
   annotations:

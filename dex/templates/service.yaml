@@ -1,10 +1,10 @@
----
+{{- $chartVersionLabel := .Chart.Version | replace "+" "_" -}}
 apiVersion: v1
 kind: Service
 metadata:
   name: {{ .Release.Name }}
-labels:
-  chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace '+' '_' }}"
+  labels:
+    chart: "{{ .Chart.Name }}-{{ $chartVersionLabel }}"
 spec:
   type: {{ .Values.service.type }}
   ports:
