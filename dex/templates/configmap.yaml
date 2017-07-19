@@ -5,7 +5,7 @@ metadata:
   name: {{ .Release.Name }}
 data:
   config.yaml: |
-    issuer: {{ .Values.Dex.Issuer }}
+    issuer: {{ .Values.dex.Issuer }}
 
     storage:
       type: kubernetes
@@ -13,7 +13,7 @@ data:
         inCluster: true
 
     web:
-{{- if .Values.Dex.Tls }}
+{{- if .Values.service.tls }}
       https: 0.0.0.0:443
       tlsCert: /etc/dex/tls/tls.crt
       tlsKey: /etc/dex/tls/tls.key
@@ -22,61 +22,61 @@ data:
 {{- end }}
 
     connectors:
-{{- if .Values.Dex.Connector.MockCallback }}
+{{- if .Values.connector.MockCallback }}
     - type: mockCallback
       id: mock
       name: Example
 {{- end }}
-{{- if .Values.Dex.Connector.GitHub }}
+{{- if .Values.connector.GitHub }}
     - type: github
       id: github
-      name: {{ .Values.Dex.Connector.GitHub.Name }}
+      name: {{ .Values.connector.GitHub.Name }}
       config:
         clientID: $GITHUB_CLIENT_ID
         clientSecret: $GITHUB_CLIENT_SECRET
-        redirectURI: {{ .Values.Dex.Issuer }}/callback
+        redirectURI: {{ .Values.Issuer }}/callback
 {{- end }}
-{{- if .Values.Dex.Connector.Oidc }}
+{{- if .Values.connector.Oidc }}
     - type: oidc
-      id: {{ .Values.Dex.Connector.Oidc.Id }}
-      name: {{ .Values.Dex.Connector.Oidc.Name }}
+      id: {{ .Values.connector.Oidc.Id }}
+      name: {{ .Values.connector.Oidc.Name }}
       config:
-        issuer: {{ .Values.Dex.Connector.Oidc.Issuer }}
+        issuer: {{ .Values.connector.Oidc.Issuer }}
         clientID: $OIDC_CLIENT_ID
         clientSecret: $OIDC_CLIENT_SECRET
-        redirectURI: {{ .Values.Dex.Issuer }}/callback
+        redirectURI: {{ .Values.Issuer }}/callback
 {{- end }}
-{{- if .Values.Dex.Connector.Ldap }}
+{{- if .Values.connector.Ldap }}
     - type: ldap
       id: ldap
-      name: {{ .Values.Dex.Connector.Ldap.Name }}
+      name: {{ .Values.connector.Ldap.Name }}
       config:
-        host: {{ .Values.Dex.Connector.Ldap.Host }}
-        insecureNoSSL: {{ .Values.Dex.Connector.Ldap.InsecureNoSsl }}
-        insecureSkipVerify: {{ .Values.Dex.Connector.Ldap.InsecureSkipVerify }}
-        bindDN: {{ .Values.Dex.Connector.Ldap.BindDn }}
-        bindPW: {{ .Values.Dex.Connector.Ldap.BindPw }}
+        host: {{ .Values.connector.Ldap.Host }}
+        insecureNoSSL: {{ .Values.connector.Ldap.InsecureNoSsl }}
+        insecureSkipVerify: {{ .Values.connector.Ldap.InsecureSkipVerify }}
+        bindDN: {{ .Values.connector.Ldap.BindDn }}
+        bindPW: {{ .Values.connector.Ldap.BindPw }}
         userSearch:
-          baseDN: {{ .Values.Dex.Connector.Ldap.UserSearch.BaseDn }}
-          filter: {{ .Values.Dex.Connector.Ldap.UserSearch.Filter }}
-          username: {{ .Values.Dex.Connector.Ldap.UserSearch.Username }}
-          idAttr: {{ .Values.Dex.Connector.Ldap.UserSearch.IdAttr }}
-          emailAttr: {{ .Values.Dex.Connector.Ldap.UserSearch.EmailAttr }}
-          nameAttr: {{ .Values.Dex.Connector.Ldap.UserSearch.NameAttr }}
+          baseDN: {{ .Values.connector.Ldap.UserSearch.BaseDn }}
+          filter: {{ .Values.connector.Ldap.UserSearch.Filter }}
+          username: {{ .Values.connector.Ldap.UserSearch.Username }}
+          idAttr: {{ .Values.connector.Ldap.UserSearch.IdAttr }}
+          emailAttr: {{ .Values.connector.Ldap.UserSearch.EmailAttr }}
+          nameAttr: {{ .Values.connector.Ldap.UserSearch.NameAttr }}
         groupSearch:
-          baseDN: {{ .Values.Dex.Connector.Ldap.GroupSearch.BaseDn }}
-          filter: {{ .Values.Dex.Connector.Ldap.GroupSearch.Filter }}
-          userAttr: {{ .Values.Dex.Connector.Ldap.GroupSearch.UserAttr }}
-          groupAttr: {{ .Values.Dex.Connector.Ldap.GroupSearch.GroupAttr }}
-          nameAttr: {{ .Values.Dex.Connector.Ldap.GroupSearch.NameAttr }}
+          baseDN: {{ .Values.connector.Ldap.GroupSearch.BaseDn }}
+          filter: {{ .Values.connector.Ldap.GroupSearch.Filter }}
+          userAttr: {{ .Values.connector.Ldap.GroupSearch.UserAttr }}
+          groupAttr: {{ .Values.connector.Ldap.GroupSearch.GroupAttr }}
+          nameAttr: {{ .Values.connector.Ldap.GroupSearch.NameAttr }}
 {{- end }}
     oauth2:
       skipApprovalScreen: true
-{{- if .Values.Dex.Connector.db }}
+{{- if .Values.connector.db }}
     enablePasswordDB: true
     staticPassword:
-    - email: {{ .Values.Dex.StaticPassword.Email }}
-      hash: {{ .Values.Dex.StaticPassword.Password }}
-      username: {{ .Values.Dex.StaticPassword.Username }}
+    - email: {{ .Values.StaticPassword.Email }}
+      hash: {{ .Values.StaticPassword.Password }}
+      username: {{ .Values.StaticPassword.Username }}
       userID: "08a8684b-db88-4b73-90a9-3cd1661f5466"
 {{- end }}
