@@ -10,6 +10,7 @@ service:
   type: NodePort
   tls: false
   NodePort: 30443
+  externalPort: 80
 ingress:
   # Used to create Ingress record (should used with service.type: ClusterIP).
   enabled: false
