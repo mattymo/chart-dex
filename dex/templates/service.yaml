@@ -17,7 +17,7 @@ spec:
     port: 80
     targetPort: 80
 {{- end }}
-{{- if .Values.service.type == "NodePort" }}
+{{- if eq .Values.service.type "NodePort" }}
     nodePort: {{ .Values.service.NodePort }}
 {{- end }}
   selector:
