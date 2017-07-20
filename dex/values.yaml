@@ -43,6 +43,7 @@ resources:
 # Must set your own credentials.
 # Use base64 encoded value.
 connector:
+  placeholder: true
 #    MockCallback: true
 #    GitHub:
 #      Name: "GitHub"
