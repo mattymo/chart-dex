@@ -1,0 +1,85 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}
+data:
+  config.yaml: |
+    issuer: {{ .Values.dex.Issuer }}
+
+    storage:
+      type: kubernetes
+      config:
+        inCluster: true
+
+    logger:
+      level: "debug"
+
+    web:
+{{- if .Values.service.tls }}
+      https: 0.0.0.0:443
+      tlsCert: /etc/dex/tls/tls.crt
+      tlsKey: /etc/dex/tls/tls.key
+{{- else }}
+      http: 0.0.0.0:80
+{{- end }}
+
+    connectors:
+{{- if .Values.connector.MockCallback }}
+    - type: mockCallback
+      id: mock
+      name: Example
+{{- end }}
+{{- if .Values.connector.GitHub }}
+    - type: github
+      id: github
+      name: {{ .Values.connector.GitHub.Name }}
+      config:
+        clientID: $GITHUB_CLIENT_ID
+        clientSecret: $GITHUB_CLIENT_SECRET
+        redirectURI: {{ .Values.Issuer }}/callback
+{{- end }}
+{{- if .Values.connector.Oidc }}
+    - type: oidc
+      id: {{ .Values.connector.Oidc.Id }}
+      name: {{ .Values.connector.Oidc.Name }}
+      config:
+        issuer: {{ .Values.connector.Oidc.Issuer }}
+        clientID: $OIDC_CLIENT_ID
+        clientSecret: $OIDC_CLIENT_SECRET
+        redirectURI: {{ .Values.Issuer }}/callback
+{{- end }}
+{{- if .Values.connector.Ldap }}
+    - type: ldap
+      id: ldap
+      name: {{ .Values.connector.Ldap.Name }}
+      config:
+        host: {{ .Values.connector.Ldap.Host }}
+        insecureNoSSL: {{ .Values.connector.Ldap.InsecureNoSsl }}
+        insecureSkipVerify: {{ .Values.connector.Ldap.InsecureSkipVerify }}
+        bindDN: {{ .Values.connector.Ldap.BindDn }}
+        bindPW: {{ .Values.connector.Ldap.BindPw }}
+        userSearch:
+          baseDN: {{ .Values.connector.Ldap.UserSearch.BaseDn }}
+          filter: {{ .Values.connector.Ldap.UserSearch.Filter }}
+          username: {{ .Values.connector.Ldap.UserSearch.Username }}
+          idAttr: {{ .Values.connector.Ldap.UserSearch.IdAttr }}
+          emailAttr: {{ .Values.connector.Ldap.UserSearch.EmailAttr }}
+          nameAttr: {{ .Values.connector.Ldap.UserSearch.NameAttr }}
+        groupSearch:
+          baseDN: {{ .Values.connector.Ldap.GroupSearch.BaseDn }}
+          filter: {{ .Values.connector.Ldap.GroupSearch.Filter }}
+          userAttr: {{ .Values.connector.Ldap.GroupSearch.UserAttr }}
+          groupAttr: {{ .Values.connector.Ldap.GroupSearch.GroupAttr }}
+          nameAttr: {{ .Values.connector.Ldap.GroupSearch.NameAttr }}
+{{- end }}
+    oauth2:
+      skipApprovalScreen: true
+{{- if .Values.connector.db }}
+    enablePasswordDB: true
+    staticPassword:
+    - email: {{ .Values.StaticPassword.Email }}
+      hash: {{ .Values.StaticPassword.Password }}
+      username: {{ .Values.StaticPassword.Username }}
+      userID: "08a8684b-db88-4b73-90a9-3cd1661f5466"
+{{- end }}

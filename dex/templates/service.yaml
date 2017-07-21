@@ -1,0 +1,24 @@
+{{- $chartVersionLabel := .Chart.Version | replace "+" "_" -}}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}
+  labels:
+    chart: "{{ .Chart.Name }}-{{ $chartVersionLabel }}"
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+  - name: {{ .Values.service.name }}
+    protocol: TCP
+{{- if .Values.service.tls }}
+    port: 443
+    targetPort: 443
+{{- else }}
+    port: 80
+    targetPort: 80
+{{- end }}
+{{- if eq .Values.service.type "NodePort" }}
+    nodePort: {{ .Values.service.NodePort }}
+{{- end }}
+  selector:
+    app: {{ .Release.Name }}
