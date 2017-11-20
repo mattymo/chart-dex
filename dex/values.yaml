@@ -8,7 +8,7 @@ image:
 service:
   name: dex
   type: NodePort
-  tls: false
+  tls: true
   NodePort: 30443
   externalPort: 80
 ingress:
@@ -35,10 +35,16 @@ resources:
 # If not using kube-lego set your own CA which compatible with the Issuer URI.
 # Use base64 encoded value.
 #
-# tls:
-#   ca: ""
-#   cert: ""
-#   key: ""
+#tls:
+#  ca: ""
+#  cert: ""
+#  key: ""
+#
+tls:
+  ca: "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUM3akNDQWRhZ0F3SUJBZ0lVVjY1U3RBc1BDaGdEaXA4SzVxbGdNQVdiZ1hBd0RRWUpLb1pJaHZjTkFRRUwKQlFBd0R6RU5NQXNHQTFVRUF4TUVhM1ZpWlRBZUZ3MHhOekV4TURJeE56QTBOVFphRncweU1qRXlNVE13T1RBMQpNalphTUE4eERUQUxCZ05WQkFNVEJHdDFZbVV3Z2dFaU1BMEdDU3FHU0liM0RRRUJBUVVBQTRJQkR3QXdnZ0VLCkFvSUJBUUNsVUJIUERicGlIL1pMQTBYMDNWTXN4QkRiVzA0aHNPL3AxVkRoeTFsTDBkSklTbmlJeGU0RW91R2MKWTF3Yk5YQVVwMlI2aURkblFYSUJ1aHgwOHpFT280ZzdtRDlFS1JVTUNJd0I5RTBWMW8wNkM5enZjNkRMd2NJeQo3UmtlS05jT3Y5c21DV28vWUUzaW1meDg2YjBKbmZFYk40dElxSzMvU1lqRmY3VHdabGtkZEhBbTljNzJDcytlCnpEakd2S0NnS0RTRi9yMzhlU1BCRXkxczNqL21OVnJjQmU3YUppS2swZklXT0FEQUdDbFZBSGpPWDhob3VaTDYKREpvTVdlZ2RvemZzYk9MUlBwdi9MUkZydEJnODVvbklhUVd4bGxmMlZNTmMzQnVKOUdZUGwyK3NxclZIbTFyWApySitVaFhhenRoTDNUMzN3YkhZZnFQc2VGN3ZWQWdNQkFBR2pRakJBTUE0R0ExVWREd0VCL3dRRUF3SUJCakFQCkJnTlZIUk1CQWY4RUJUQURBUUgvTUIwR0ExVWREZ1FXQkJTd00rb21ISDlnWE9kcU5GRWZabkVLRmR0MkJEQU4KQmdrcWhraUc5dzBCQVFzRkFBT0NBUUVBUDl4Q3FvRWdDai9vWW9waHhvenIzNWJ4dVpxTEVOMElYUjNRNUlVagppY0tuWHk5S3dNQ3F0YnB4VlJnb3laTGZsNFFaVlpJbi9TSnZDV3BHZ3RRTDcxdng3R3dPR0Z3SzBYdVMvOWl3CmNhNGtxbkNJdDk3ejEwK0RUb3hQVWoxNHo3aFBTTVNTVHcrN0tybFZzVndkZkNGNjdjRW1kaXVPdHJLSk5KM0UKL1dYZUp1UGZWWU5Zc09kbHhORGRZSVM1SjZBVmRhY3ZLVEQzZHZlOTZCTzlpVVhldWhGZ09ZeTd4SVpHeHJlOQpJSkdjVnRPMWpXQ2FBOFdld3VGNTYwdVRtQ09WUlpPNmI4UmR1VjJpclJMZEhjWVVxNEk1dUdRL3Vsd1ptOXhLCmhnN2NlVDBqd2c1QWhCL29Ea1dhUG1vcmM4Q3BlZFVkL0F2SU51M3FDQ3dGblE9PQotLS0tLUVORCBDRVJUSUZJQ0FURS0tLS0tCg=="
+  cert: "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSURhakNDQWxLZ0F3SUJBZ0lVUXhWMFVUK3FMOVBHYVBnVmpWUVIvc0dOeDJRd0RRWUpLb1pJaHZjTkFRRUwKQlFBd0R6RU5NQXNHQTFVRUF4TUVhM1ZpWlRBZUZ3MHhOekV4TWpBeE5ERXdNVEJhRncweE9ERXhNakF4TkRFdwpNemxhTUN3eEtqQW9CZ05WQkFNVElXUmxlQzVyZFdKbExYTjVjM1JsYlM1emRtTXVZMngxYzNSbGNpNXNiMk5oCmJEQ0NBU0l3RFFZSktvWklodmNOQVFFQkJRQURnZ0VQQURDQ0FRb0NnZ0VCQUtrYWxTMVJabWNTdlgvb084ZmoKV3NWODg2WnRWMTZTU0dlWkEzZTBoTkdUbHVNNytrL2p2RVFsc3Y2L0h6N0xaeDlJbzdKdXlrK2lXTnNRR294OQo1UW0rQTBJand5dlYreWJsejRwd3pxR21OQ2N2R21PR2oyL0VCWXdXN2hkRW53RldBT0lhd0U5SWhmemFVazVjCmFBKzBVN2tuaTkvOXN6bkZRUDJ3RkJoeTcvNGc3ZWI3UjFMWWFPREtvS1VLRkk2RGpVbjlWWUY5cGNCTUh5YksKMUhiQWtJWFh6RGRKNXRLUzlxV3Z1NmFENEVaaFhDNnRiQ0tUYmVpalIwQk0yYldDTVQxOGlKaVVhVnIwU2VJSApMalUwMmNVVVhsL1A5WWxmSWRlemxJb09ZYk84aVFWc3lVcWFOT2ZQWnk3T2NqNVVpM25WYlVtalpzbGIzYXdZCjVNc0NBd0VBQWFPQm9EQ0JuVEFPQmdOVkhROEJBZjhFQkFNQ0E2Z3dIUVlEVlIwbEJCWXdGQVlJS3dZQkJRVUgKQXdFR0NDc0dBUVVGQndNQ01CMEdBMVVkRGdRV0JCU0Z1bE1oVjlwOTVrTyt6cWRFWGZva1A2aWprVEFmQmdOVgpIU01FR0RBV2dCU3dNK29tSEg5Z1hPZHFORkVmWm5FS0ZkdDJCREFzQmdOVkhSRUVKVEFqZ2lGa1pYZ3VhM1ZpClpTMXplWE4wWlcwdWMzWmpMbU5zZFhOMFpYSXViRzlqWVd3d0RRWUpLb1pJaHZjTkFRRUxCUUFEZ2dFQkFId0sKYzRKRmxPMTJ2WTlTY005WFA3NS9xa3dKaENKUWtxa2o4TUtObk1aMDM5M0V6WEFweXNsWmZrY0lxelBEdEJCaAphdFdMdk5OOVliMldDa2owY1lEZktzZmQ0RVZpaDhuZTZkMzZ0aUdJRHNub1JYVEluTTFBR1gxSmZtTUFBSGtHCmV6bUtDbWlxazdvUG9jQUVNNmlxMzVSUGNUa3V0L2x6cHhQWjAzVUFYNXVkNUF6T1dXaTkvdDJSa1BkZGhhZ3YKdmFOWklTbFo1MktyUmlINS95UnVZTFd3UXhmVGlLVmo0WTZJVnR1bmNDcmlIUlMxRk9qdkJIQzFteFJTTFdaQgp3Q0pWckxzOG1mdjV1RkhDUXlDbDZoWmFyQ3MvdmszRWh5aFgyK3ZZVG4yejd3VWtKSzJiUi9vVVA1K21abkVXCmpHeXdFUURjcjFnOGszZXJ0RWs9Ci0tLS0tRU5EIENFUlRJRklDQVRFLS0tLS0K"
+  key: "LS0tLS1CRUdJTiBSU0EgUFJJVkFURSBLRVktLS0tLQpNSUlFb2dJQkFBS0NBUUVBcVJxVkxWRm1aeEs5ZitnN3grTmF4WHp6cG0xWFhwSklaNWtEZDdTRTBaT1c0enY2ClQrTzhSQ1d5L3I4ZlBzdG5IMGlqc203S1Q2SlkyeEFhakgzbENiNERRaVBESzlYN0p1WFBpbkRPb2FZMEp5OGEKWTRhUGI4UUZqQmJ1RjBTZkFWWUE0aHJBVDBpRi9OcFNUbHhvRDdSVHVTZUwzLzJ6T2NWQS9iQVVHSEx2L2lEdAo1dnRIVXRobzRNcWdwUW9Vam9PTlNmMVZnWDJsd0V3ZkpzclVkc0NRaGRmTU4wbm0wcEwycGErN3BvUGdSbUZjCkxxMXNJcE50NktOSFFFelp0WUl4UFh5SW1KUnBXdlJKNGdjdU5UVFp4UlJlWDgvMWlWOGgxN09VaWc1aHM3eUoKQld6SlNwbzA1ODluTHM1eVBsU0xlZFZ0U2FObXlWdmRyQmpreXdJREFRQUJBb0lCQUJyaTh4MEZlRGFqTUNZSwpFcGN4ZXRremlMbkpZTDdVbTFaOWFhTzZ1L05tZC9NaE1pZEpta0ZyalE0YjdTZmF4MGFlRWdqb3ZKbjB3aFB5CmQ0WW03aWVpWW5vOW5XWjIyenZRQmpPSXhCSEhqenM3cmdKcy9wbFNuVjhzdGlaVTdzTVRuWWhWb0lYNmpmTXAKOHpRcVZSRktKcFdseUFPUkh0SHNudXkyOWpyOHFTRHFjWEpRS05tQXFMNFhJdXUwTkNQZlM4SWhIb3VYODM5VAp2NUJXZnBycUxESmJMbmNJMzB2S3lrV291NnhYd2pHNlJOV3hna0NseGhsWmJFSlpQREpzREpBdVovSFBXamJkCm9xZkwzRCs2YzVXT1RTMHVnQXMybHYzVTZPRnVndm1aT1E0QTZ5SDl5N3l3Ni9RRWRLblRDZDhNTWlnU01hVEsKVFZFUGg0RUNnWUVBeVZQTVkvRUErYmtIZUhZSWJnaDh5anlZTUtzU2JudTBYUWZsWTNqaGN4RUlqaHNPa3c4QQorM0Q5dXk5N3ZzWHdoSXg1UFAwWFUxcktDK3laZGZ6cmtNZUUrNkVtbGhXVVRSUnRHaEh0bzVnamE2bDlUam9iClh1Y3diNTcyRUZURC9tNnFQM0tvenNmRVQ1S3RqRnZOemRYL2MySVdtYU0ySVdDMmlqTm9SSEVDZ1lFQTF3YWUKWWIreEhGTlJVNEdvdUdPVFNlelBqMHRkUm0yQU1RM3F2WXRlRGxLSldoQXhxclM3aTlnTVl0dWxFUmhQWTc5LwpNN3ZNV0RZbFpZczdzMHV5VEJVeG5SWUZ3UG9md08wQlpvUDVtZzFzOEZHWCtvby9CanFpL3lpZ1EwcHZJYmdrCnk3U0YxNmF1cElLRW1sV1l3RnYxRnR5N0tUMHJGM0V5Wk1oM2F2c0NnWUFUbXZOMmNBdTJSY3h5Y0p3Vml3SUwKOTZhaVpxWmUxL0VTZGloaWJXMFc5WHV0eXZpNlhXV3RGcTIrd3JyOE11NWZHZ2JjWjVFVDd1MXFCOXBSNFJWWApmZlozUXBRdFhXQ1p1UGwrNW13TDJFN3F0eENhdzVIU3hoU3phZmx3VWJEY1lBNTRLMFJCRHJjUlFLbGgxN2JNCjZwLzdybnVnN29IZzhqZ1VjVGtnSVFLQmdIWHJKMGdydTVEeEVCUmZjb3RMOENZR08vMDFNejNBSnlDL3BRKzEKTWl0Z2ovcFlEeVN5WUhkY1Q4Nlc3WHJtZmdNUnJVeE5uTTV6UXliZ3FDaTNSbHY2ODI1VitXbk93VU1udGpEbQpCeWU0WFJtZFpWNzhHWHZ0QkI0eHhWR2hyRGd0cCtBZWE1Zkx6TkppMFIxaCs1YmgxeEpta2kwWFlsNUVzWUliCmZZR3BBb0dBVDNIRVFCSklRbDZ4c0pkNm0rWU9Ramw3WndSSXFhUCtHdGdrck1EaG1sSHI3YWkyaGlwSGpkZjIKdUxaQ004Qk5OMDRmRHhRUlpCdUxiUS82Z2FFNTgzcmtiRDFWaEo1QmJoOHZtcTZFaXdmcCtCYzZLVTZCSHBoMQpTbkxNM2NVODg4cTRsZWQrZnE4VU9hL29sS2p6a0hhZlEydVVBOUZDZ1U0cGROMGdZQTg9Ci0tLS0tRU5EIFJTQSBQUklWQVRFIEtFWS0tLS0tCg=="
+
 
 # Must set your own credentials.
 # Use base64 encoded value.
@@ -55,35 +61,37 @@ connector:
 #      Issuer: "https://accounts.google.com"
 #      ClientId: ""
 #      ClientSecret: ""
-#    Ldap:
-#      Name: "LDAP"
-#      Host: "openldap.kube-system.svc.cluster.io:389"
-#      InsecureNoSsl: true
-#      InsecureSkipVerify: true
-#      BindDn: "ou=users,dc=local,dc=io"
-#      BindPw: "admin"
-#      UserSearch:
-#        BaseDn: "ou=users,dc=local,dc=io"
-#        Filter: "(objectClass=posixAccount)"
-#        Username: "uid"
-#        IdAttr: "uid"
-#        EmailAttr: "mail"
-#        NameAttr: "uid"
-#      GroupSearch:
-#        BaseDn: "ou=groups,dc=local,dc=io"
-#        Filter: "(objectClass=posixGroup)"
-#        UserAttr: "uid"
-#        GroupAttr: "memberUid"
-#        NameAttr: "cn"
+  Ldap:
+    Name: "LDAP"
+    Host: "ipa.default.svc.cluster.local:389"
+    InsecureNoSsl: true
+    InsecureSkipVerify: true
+    BindDn: "uid=admin,cn=users,cn=compat,dc=cluster,dc=local"
+    BindPw: "adminpass"
+    UserSearch:
+      BaseDn: "cn=users,cn=compat,dc=cluster,dc=local"
+      Filter: "(objectClass=posixAccount)"
+      Username: "uid"
+      IdAttr: "uid"
+      EmailAttr: "mail"
+      NameAttr: "uid"
+    GroupSearch:
+      BaseDn: "cn=groups,cn=compat,dc=cluster,dc=local"
+      Filter: "(objectClass=posixGroup)"
+      UserAttr: "uid"
+      GroupAttr: "memberUid"
+      NameAttr: "cn"
 StaticPassword:
   Email: "admin@example.com"
+  # hashed "password"
   Hash: "$2a$10$2b2cU8CPhOTaGrs1HRQuAueS7JTT5ZHsHSzYiFPm1leZck7Mc8T4W"
   Username: "admin"
   UserID: "08a8684b-db88-4b73-90a9-3cd1661f5466"
 
 dex:
-  Issuer: "https://kube-1.local.io:30443"
-  RedirectUri: "https://kube-1.local.io:30443/callback"
+  Issuer: "https://dex.default.cluster.local:30443"
+  RedirectUri: "https://dex.default.cluster.local:30443/callback"
 
+#Letsencrypt integration
 UseLego: true
 

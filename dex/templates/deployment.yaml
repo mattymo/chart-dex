@@ -2,16 +2,21 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: {{ .Release.Name }}
+  name: {{ template "fullname" . }}
   labels:
-    app: "{{ .Chart.Name }}-{{ $chartVersionLabel }}"
+    app: {{ template "name" . }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
 spec:
   replicas: {{ .Values.replicaCount }}
   template:
     metadata:
       labels:
-        app: {{ .Release.Name }}
+        app: {{ template "name" . }}
+        release: {{ .Release.Name }}
     spec:
+      serviceAccountName: dex
       containers:
       - name: {{ .Chart.Name }}
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
@@ -46,24 +51,24 @@ spec:
         - name: GITHUB_CLIENT_ID
           valueFrom:
             secretKeyRef:
-              name: {{ .Release.Name }}.github
+              name: {{ template "fullname" . }}.github
               key: client-id
         - name: GITHUB_CLIENT_SECRET
           valueFrom:
             secretKeyRef:
-              name: {{ .Release.Name }}.github
+              name: {{ template "fullname" . }}.github
               key: client-secret
 {{- end }}
 {{- if .Values.connector.Oidc }}
         - name: OIDC_CLIENT_ID
           valueFrom:
             secretKeyRef:
-              name: {{ .Release.Name }}.oidc
+              name: {{ template "fullname" . }}.oidc
               key: client-id
         - name: OIDC_CLIENT_SECRET
           valueFrom:
             secretKeyRef:
-              name: {{ .Release.Name }}.oidc
+              name: {{ template "fullname" . }}.oidc
               key: client-secret
 {{- end }}
         resources:
@@ -71,12 +76,12 @@ spec:
       volumes:
       - name: config
         configMap:
-          name: {{ .Release.Name }}
+          name: {{ template "fullname" . }}
           items:
           - key: config.yaml
             path: config.yaml
 {{- if .Values.service.tls }}
       - name: tls
         secret:
-          secretName: {{ .Release.Name }}.tls
+          secretName: {{ template "fullname" . }}.tls
 {{- end }}

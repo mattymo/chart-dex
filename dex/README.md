@@ -175,7 +175,17 @@ $ kubectl config use-context dex-test
 $ kubectl get node
 ```
 
+
+## Vault TLS generation
+Assuming you are deploying with Kubespray with vault enabled, you can generate a TLS certificate
+for your helm chart
+From a host running vault, run the following script:
+./make-ssl-vault.sh dex.kube-system.svc.cluster.local
+
+Copy and paste the output from the script into your vaules.yaml
+
 ## To Do
+- Automate make-ssl-vault.sh as a pre-install hook
 - Support GRPC endpoints for registering client dynamically(Currently support static client only : example-app)
 - Support various Storage Backend : SQL, SQLite3, Postgres(Currently support kubernetes third party resources only)
 - Support multiple oidc connector
